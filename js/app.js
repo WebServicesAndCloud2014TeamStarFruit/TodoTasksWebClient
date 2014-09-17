@@ -1,9 +1,26 @@
-/*!
-** Todo-Sortable-List Example App
-** Licensed under the Apache License v2.0
-** http://www.apache.org/licenses/LICENSE-2.0
-** Built by Jay Kanakiya ( @techiejayk )
-**/
 "use strict";
 
-var App = angular.module("todo", ["ui.sortable", "LocalStorageModule"]);
+var App = angular.module("todo", ["ui.sortable", "ui.router", "ngRoute", "LocalStorageModule"]);
+
+//Setting up route
+App.config(['$stateProvider',
+    function ($stateProvider) {
+        // states for my app
+        $stateProvider
+            .state('auth', {
+                templateUrl: 'index.html'
+            })
+            .state('auth.login', {
+                url: '/login',
+                templateUrl: 'login.html'
+            })
+            .state('auth.register', {
+                url: '/register',
+                templateUrl: 'register.html'
+            })
+            .state('auth.home', {
+                url: '/home',
+                templateUrl: 'home.html'
+            });
+    }
+])

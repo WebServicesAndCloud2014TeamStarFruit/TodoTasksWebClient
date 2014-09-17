@@ -1,0 +1,67 @@
+﻿<div class="container" ng-controller="TodoCtrl" id="playground">
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="list-group">
+                <a href="#" ng-repeat="todos in model" class="list-group-item" ng-class="{'active' : currentShow === $index}" ng-click="changeTodo($index)">
+                    <span class="badge">{{todos.list.length}}</span>
+                    {{todos.name}}
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-9">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                                <input type="search" class="form-control" placeholder="Search" ng-model="todoSearch">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="nav nav-pills todo-filter">
+                                <li ng-class="{'active' : show == 'All' }" ng-click="show='All'"><a href="#">All</a></li>
+                                <li ng-class="{'active' : show == 'Incomplete' }" ng-click="show='Incomplete'"><a href="#">Incomplete</a></li>
+                                <li ng-class="{'active' : show == 'Complete' }" ng-click="show='Complete'"><a href="#">Complete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <ul class="list-unstyled" ui-sortable="todoSortable" ng-model="todos" ng-repeat="todos in model" ng-show="$index === currentShow">
+                                        <li class="todoTask" ng-repeat="todo in todos.list | filter:showFn | filter :todoSearch ">
+                                            <input class="todoCheckbox" ng-model="todo.isDone" type="checkbox">
+                                            <label class="todoCheckboxlabel"></label>
+                                            <edit-in-place value="todo.taskName"></edit-in-place>
+                                            <button type="button" class="close pull-right" aria-hidden="true" ng-click="deleteTodo($index)">&times;</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input class="todoField" id="newTodoField" type="text" ng-model="newTodo" placeholder="Add New Todo" ng-enter>
+                                        <button id="todoSubmit" class="btn btn-default" ng-click="addTodo()">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

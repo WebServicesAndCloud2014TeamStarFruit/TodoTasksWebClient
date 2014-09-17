@@ -57,9 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
-    <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\common.css" />
     <Content Include="css\images\animated-overlay.gif" />
@@ -78,6 +76,7 @@
     <Content Include="css\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="css\jquery-ui.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="home.html" />
     <Content Include="index.html" />
     <Content Include="js\app.js" />
     <Content Include="js\controllers\AuthCtrl.js" />
@@ -85,6 +84,8 @@
     <Content Include="js\directives\angular.editInPlace.js" />
     <Content Include="js\directives\angular.ngEnter.js" />
     <Content Include="js\libs\angular-local-storage.min.js" />
+    <Content Include="js\libs\angular-route.min.js" />
+    <Content Include="js\libs\angular-ui-router.js" />
     <Content Include="js\libs\angular.min.js" />
     <Content Include="js\libs\bootstrap.js" />
     <Content Include="js\libs\bootstrap.min.js" />
@@ -102,6 +103,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="js\libs\angular.min.js.map" />
+    <Content Include="js\libs\jquery.min.map" />
+    <Content Include="js\libs\angular-route.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
