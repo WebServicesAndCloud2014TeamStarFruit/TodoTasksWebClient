@@ -6,34 +6,43 @@ App.controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$rou
             $scope.user = {};
 
             $scope.login = function () {
-                $http.post('/api/users/login', {
-                    login: $scope.user.login,
+                $http.post('http://todotasks.apphb.com/Token', {
+                    username: $scope.user.username,
                     password: $scope.user.password
                 })
-                    .success(function (user) {
+                    .success(function(user){
                         // authentication OK
                         $rootScope.user = user;
                         //$rootScope.$emit('userChanged');
-                        $location.url('/');
-
+                        //$location.url('/');
+                        console.log(user);
                     })
-                    .error(function () {
-                        Notification.showErrors(StringTable.authErr);
+                    .error(function (errors) {
+                        console.log(errors)
                     });
             };
         }
     ])
     .controller("RegisterCtrl", ["$scope", "$http", "$location", "$route",
         function ($scope, $http, $location, $route) {
+            //delete $http.defaults.headers.common['X-Requested-With'];
 
             $scope.user = {};
 
-            $scope.checkUsernameAvailability = function () {
-
-            };
-
             $scope.register = function () {
-                console.log("test register");
+                $http.post('http://todotasks.apphb.com/api/Account/register',
+                {
+                    UserName: $scope.user.username,
+                    Password: $scope.user.password,
+                    ConfirmPassword: $scope.user.confirmPassword,
+                    Email: $scope.user.email
+                })
+                .success(function (user) {
+                    console.log(user);
+                })
+                .error(function (errors) {
+                    console.log(errors);
+                });
             };
         }
     ]);

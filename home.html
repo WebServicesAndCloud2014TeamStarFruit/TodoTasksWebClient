@@ -1,5 +1,5 @@
-﻿<div class="container" ng-controller="TodoCtrl" id="playground">
-    <div class="row">
+﻿<div class="container" id="playground" ng-controller="TodoCtrl" ng-init="init()">
+    <div class=" row">
         <div class="col-xs-3">
             <div class="list-group">
                 <a href="#" ng-repeat="todos in model" class="list-group-item" ng-class="{'active' : currentShow === $index}" ng-click="changeTodo($index)">

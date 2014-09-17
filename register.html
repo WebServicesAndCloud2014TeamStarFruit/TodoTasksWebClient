@@ -6,7 +6,7 @@
             <div class="input-group">
                 <span class="input-group-addon icon-user"></span>
                 <input id="username" type="text" name="username" placeholder="Username" class="form-control input-lg"
-                        ng-model="user.username" ng-blur="checkUsernameAvailability()" />
+                        ng-model="user.username" />
             </div>
             <label for="email" class="sr-only">Email</label>
             <div class="input-group">
@@ -20,6 +20,12 @@
                 <input id="password" type="password" name="password" placeholder="Password"
                         class="form-control input-lg"
                         ng-model="user.password" />
+            </div>
+            <div class="input-group last">
+                <span class="input-group-addon icon-lock"></span>
+                <input id="confirmPassword" type="password" name="confirmPassword" placeholder="ConfirmPassword"
+                       class="form-control input-lg"
+                       ng-model="user.confirmPassword" />
             </div>
         </div>
         <div class="button-holder">
