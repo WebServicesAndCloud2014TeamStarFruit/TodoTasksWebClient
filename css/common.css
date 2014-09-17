@@ -40,3 +40,12 @@
   display: inline-block;
 }
 /*# sourceMappingURL=common.css.map */
+
+/*-----------------------------------------------
+	Form elements
+----------------------------------------------- */
+.form-container {
+  max-width:480px;
+  margin-right: auto;
+  margin-left: auto;
+}
