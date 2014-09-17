@@ -5,6 +5,7 @@ App.controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$rou
         	$scope.user = {};
 
         	$scope.login = function () {
+        		debugger;
         		$http.post('http://localhost:56841/Token', {
         			username: $scope.user.email,
         			password: $scope.user.password,
