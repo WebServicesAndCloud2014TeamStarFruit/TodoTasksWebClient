@@ -130,8 +130,17 @@
     <TypeScriptCompile Include="js\services\AuthorizeService.ts" />
     <TypeScriptCompile Include="js\services\NotificationService.ts" />
     <TypeScriptCompile Include="js\controllers\TodoCtrl.ts" />
+    <Content Include="js\app.js" />
+    <Content Include="js\controllers\AuthCtrl.js" />
+    <Content Include="js\controllers\IndexCtrl.js" />
+    <Content Include="js\controllers\NavCtrl.js" />
+    <Content Include="js\controllers\TodoCtrl.js" />
     <Content Include="js\directives\angular.editInPlace.js" />
     <Content Include="js\directives\angular.ngEnter.js" />
+    <Content Include="js\services\AuthInterceptorService.js" />
+    <Content Include="js\services\AuthorizeService.js" />
+    <Content Include="js\services\DataService.js" />
+    <Content Include="js\services\NotificationService.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.1.js" />
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
@@ -200,14 +209,14 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="Tools\TypeScript\Microsoft.TypeScript.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>11615</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
