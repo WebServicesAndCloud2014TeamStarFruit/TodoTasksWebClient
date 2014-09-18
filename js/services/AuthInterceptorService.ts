@@ -1,38 +1,42 @@
 ﻿interface IAuthInterceptorService {
     request: any;
-    responseError: any;
+    responseError: any
 };
 
-App.service('authInterceptorService', ['$q', '$location', '$window',
+App.factory('authInterceptorService', ['$q', '$location', '$window',
     function (
         $q: any,
         $location: ng.ILocationService,
         $window: ng.IWindowService) {
 
-    var authInterceptorServiceFactory : IAuthInterceptorService;
+        var authInterceptorServiceFactory: IAuthInterceptorService;
 
-    var _request = function (config) {
+        authInterceptorServiceFactory = {
+            request: "",
+            responseError: ""
+        };
 
-        config.headers = config.headers || {};
+        var _request = function (config) {
+            config.headers = config.headers || {};
 
-        var authData = $window.sessionStorage.getItem('todoAppAuthUserData');
-        if (authData) {
-            config.headers.Authorization = 'Bearer ' + authData.token;
-        }
+            var authData = $window.sessionStorage.getItem('todoAppAuthUserData');
 
-        return config;
-    };
+            if (authData) {
+                config.headers.Authorization = 'Bearer ' + authData.token;
+            }
 
-    var _responseError = function (rejection) {
-        if (rejection.status === 401) {
-            $location.path('/login');
-        }
-        return $q.reject(rejection);
-    };
+            return config;
+        };
 
-    authInterceptorServiceFactory.request = _request;
-    authInterceptorServiceFactory.responseError = _responseError;
+        var _responseError = function (rejection) {
+            if (rejection.status === 401) {
+                $location.path('/login');
+            }
+            return $q.reject(rejection);
+        };
 
-    return authInterceptorServiceFactory;
+        authInterceptorServiceFactory.request = _request;
+        authInterceptorServiceFactory.responseError = _responseError;
 
+        return authInterceptorServiceFactory;
 }]); 

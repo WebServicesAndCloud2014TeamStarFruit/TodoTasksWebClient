@@ -1,4 +1,4 @@
-/// <reference path="../scripts/typings/angular-ui/angular-ui-router.d.ts" />
+﻿/// <reference path="../scripts/typings/angular-ui/angular-ui-router.d.ts" />
 "use strict";
 var App = angular.module("todo", ["ui.sortable", "ui.router", "ngRoute", "LocalStorageModule"]);
 
@@ -27,6 +27,7 @@ App.config([
 
         //$httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        $httpProvider.interceptors.push('authInterceptorService');
     }
 ]);
 //# sourceMappingURL=app.js.map
