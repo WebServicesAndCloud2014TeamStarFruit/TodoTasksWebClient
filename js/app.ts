@@ -37,6 +37,17 @@ App.config(['$stateProvider', '$urlRouterProvider',
 		}
 	]);
 
-App.run(['authService', function (authService) {
-	authService.fillAuthData();
-}]);
+App.run(["authService", "notificationService",
+	(
+		authService,
+		notification: INotificationService) => {
+		authService.fillAuthData();
+
+		window["PUBNUB"].init({
+			publish_key: 'pub-c-64796d9d-5e70-4409-b54d-44a0351fee2e',
+			subscribe_key: 'sub-c-b55bc4f6-3d9c-11e4-8e82-02ee2ddab7fe'
+		}).subscribe({
+				channel: "TodoNotification",
+				message: message => notification.addInfo(message)
+			});
+	}]);

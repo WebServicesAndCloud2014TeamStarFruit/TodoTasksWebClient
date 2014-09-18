@@ -32,7 +32,18 @@ App.config([
 ]);
 
 App.run([
-    'authService', function (authService) {
+    "authService", "notificationService",
+    function (authService, notification) {
         authService.fillAuthData();
+
+        window["PUBNUB"].init({
+            publish_key: 'pub-c-64796d9d-5e70-4409-b54d-44a0351fee2e',
+            subscribe_key: 'sub-c-b55bc4f6-3d9c-11e4-8e82-02ee2ddab7fe'
+        }).subscribe({
+            channel: "TodoNotification",
+            message: function (message) {
+                return notification.addInfo(message);
+            }
+        });
     }]);
 //# sourceMappingURL=app.js.map
