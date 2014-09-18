@@ -6,22 +6,29 @@
         var dataService = {
             serverUrl: url,
             getAllCategories: function () {
-                var promise = $http.get(url + "/api/Categories/All").then(function (data) {
-                    return data;
+                var promise = $http.get(url + "/api/Categories/All").then(function (result) {
+                    return result.data;
                 });
 
                 return promise;
             },
             createCategory: function (categoryName) {
-                var promise = $http.post(url + "/api/Categories/Create", { Name: categoryName }).then(function (data) {
-                    return data;
+                var promise = $http.post(url + "/api/Categories/Create", { Name: categoryName }).then(function (result) {
+                    return result.data;
                 });
 
                 return promise;
             },
             getTasksByCategory: function (categoryId) {
-                var promise = $http.get(url + "/api/Tasks/FilterByCategory?categoryId=" + categoryId).then(function (data) {
-                    return data;
+                var promise = $http.get(url + "/api/Tasks/FilterByCategory?categoryId=" + categoryId).then(function (result) {
+                    return result.data;
+                });
+
+                return promise;
+            },
+            getAllTasks: function () {
+                var promise = $http.get(url + "/api/Tasks/All").then(function (result) {
+                    return result.data;
                 });
 
                 return promise;
@@ -32,8 +39,8 @@
                     Deadline: deadline,
                     Status: 1,
                     CategoryId: categoryId
-                }).then(function (data) {
-                    return data;
+                }).then(function (result) {
+                    return result.data;
                 });
 
                 return promise;
