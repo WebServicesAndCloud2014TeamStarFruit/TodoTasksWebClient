@@ -84,6 +84,7 @@
     <Content Include="index.html" />
     <TypeScriptCompile Include="js\app.ts" />
     <TypeScriptCompile Include="js\controllers\AuthCtrl.ts" />
+    <TypeScriptCompile Include="js\controllers\NavCtrl.ts" />
     <TypeScriptCompile Include="js\services\AuthInterceptorService.ts" />
     <TypeScriptCompile Include="js\services\NotificationService.ts" />
     <TypeScriptCompile Include="js\controllers\TodoCtrl.ts" />

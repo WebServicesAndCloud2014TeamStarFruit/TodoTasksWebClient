@@ -22,10 +22,12 @@ App.controller("LoginCtrl", [
             }).success(function (data) {
                 // authentication OK
                 $rootScope.user = data;
-                $rootScope.$emit('userChanged');
+                $rootScope.authentication = {
+                    IsAuth: true,
+                    userName: $scope.user.userName
+                };
                 $location.url('/home');
                 $window.sessionStorage.setItem("todoAppAuthUserData", JSON.stringify(data));
-                console.log(data);
             }).error(function (errors) {
                 return notification.addError(errors.error_description);
             });
@@ -61,6 +63,17 @@ App.controller("LoginCtrl", [
 
                 notification.addError(messages);
             });
+        };
+    }
+]).controller("LogoutCtrl", [
+    "$scope", "$rootScope", "$window",
+    function ($scope, $rootScope, $window) {
+        $scope.logout = function () {
+            $window.sessionStorage.removeItem('todoAppAuthUserData');
+            $rootScope.authentication = {
+                IsAuth: false,
+                userName: ""
+            };
         };
     }
 ]);
