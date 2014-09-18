@@ -1,46 +1,24 @@
-﻿interface IAuthInterceptorService {
-    request: any;
-    responseError: any
-};
+﻿"use strict";
 
-App.factory('authInterceptorService', ['$q', '$location', '$window',
-    function (
-        $q: any,
-        $location: ng.ILocationService,
-        $window: ng.IWindowService) {
+App.factory('authInterceptorService', ['$q', '$location', 'localStorageService',
+	($q, $location, localStorageService) => {
+		return {
+			request: (config) => {
+				config.headers = config.headers || {};
 
-        var authInterceptorServiceFactory: IAuthInterceptorService;
+				var authData: IAuthData = localStorageService.get('authorizationData');
+				if (authData) {
+					config.headers.Authorization = 'Bearer ' + authData.token;
+				}
 
-        authInterceptorServiceFactory = {
-            request: "",
-            responseError: ""
-        };
+				return config;
+			},
+			responseError: (rejection) => {
+				if (rejection.status === 401) {
+					$location.path('/login');
+				}
 
-        var _request = function (config) {
-            config.headers = config.headers || {};
-
-            var authData = $window.sessionStorage.getItem('todoAppAuthUserData');
-
-            if (authData) {
-                console.log();
-
-                config.headers.Authorization = 'Bearer ' + angular.fromJson(authData).access_token;
-            }
-
-            return config;
-        };
-
-        var _responseError = function (rejection) {
-            console.log('rejected');
-
-            if (rejection.status === 401) {
-                $location.path('/login');
-            }
-            return $q.reject(rejection);
-        };
-
-        authInterceptorServiceFactory.request = _request;
-        authInterceptorServiceFactory.responseError = _responseError;
-
-        return authInterceptorServiceFactory;
-}]); 
+				return $q.reject(rejection);
+			}
+		};
+	}]);

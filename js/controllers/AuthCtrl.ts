@@ -1,97 +1,62 @@
 ﻿"use strict";
 
-App
-    .controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$route", "$window", "notificationService", "dataService",
+App.controller("LoginCtrl", ["$scope", "$location", "notificationService", "authService",
 	(
 		$scope: any,
-		$rootScope: any,
-		$http: ng.IHttpService,
 		$location: ng.ILocationService,
-		$route: ng.route.IRouteService,
-		$window: ng.IWindowService,
-        notification: INotificationService,
-        dataService: IDataService) => {
+		notification: INotificationService,
+		authService) => {
+		$scope.user = {};
 
-		    $scope.user = {};
+		$scope.login = function () {
+			var credentials: ICredentials = {
+				userName: $scope.user.email,
+				password: $scope.user.password
+			};
 
-		    $scope.login = () => {
-			    $http.post(dataService.serverUrl + '/Token', {
-				    username: $scope.user.email,
-				    password: $scope.user.password,
-				    grant_type: "password"
-			    }, {
-					    transformRequest: obj => {
-						    var str = [];
-						    for (var p in obj)
-							    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-						    return str.join("&");
-					    },
-					    headers: {
-						    'Content-Type': 'application/x-www-form-urlencoded'
-					    }
-				    })
-				    .success(data => {
-					    // authentication OK
-                        $rootScope.user = data;
-                        $rootScope.authentication = {
-                            IsAuth: true,
-                            userName: $scope.user.userName
-                        };
-					    $location.url('/home');
-                        $window.sessionStorage.setItem("todoAppAuthUserData", JSON.stringify(data));
-				    })
-				    .error(errors => notification.addError(errors.error_description));
-		    };
-	    }
-    ])
-    .controller("RegisterCtrl", ["$scope", "$http", "notificationService", "dataService",
-	(
-		$scope: any,
-		$http: ng.IHttpService,
-        notification: INotificationService,
-        dataService: IDataService) => {
-
-            $scope.user = {};
+			authService.login(credentials).then(
+				response => $location.url('/home'),
+				error => notification.addError(error.error_description));
+		};
+	}
+]).controller("RegisterCtrl", ["$scope", "$location", "notificationService", "authService", "$timeout",
+		(
+			$scope: any,
+			$location: ng.ILocationService,
+			notification: INotificationService,
+			authService,
+			$timeout: ng.ITimeoutService) => {
+			$scope.user = {};
 
 			$scope.register = () => {
-				$http({
-					url: dataService.serverUrl + '/api/Account/register',
-					method: "POST",
-					data: {
-						UserName: $scope.user.username,
-						Password: $scope.user.password,
-						ConfirmPassword: $scope.user.confirmPassword,
-						Email: $scope.user.email
+				authService.saveRegistration({
+					Email: $scope.user.email,
+					Password: $scope.user.password,
+					ConfirmPassword: $scope.user.confirmPassword,
+				}).then(
+					(response) => {
+						notification.addInfo("User has been registered successfully, you will be redicted to login page in 2 seconds.");
+						startTimer();
 					},
-					withCredentials: false
-				})
-					.success(user => console.log(user))
-					.error(errors => {
-						var errorKeys = Object.keys(errors.ModelState);
+					(response) => {
+						var errorKeys = Object.keys(response.data.ModelState);
 						var messages = "";
 
 						for (var key in errorKeys) {
 							if (errorKeys.hasOwnProperty(key)) {
-								messages += errors.ModelState[errorKeys[key]] + "\n";
+								messages += response.data.ModelState[errorKeys[key]] + "\n";
 							}
 						}
 
 						notification.addError(messages);
 					});
 			};
-		}
-    ])
-    .controller("LogoutCtrl", ["$scope", "$rootScope", "$window",
-    (
-        $scope: any,
-        $rootScope: any,
-        $window: ng.IWindowService) => {
-            $scope.logout = () => {
-                $window.sessionStorage.removeItem('todoAppAuthUserData');
-                $rootScope.authentication = {
-                    IsAuth: false,
-                    userName: ""
-                }
-            };
-        }
-    ]);
+
+			var startTimer = function () {
+				var timer = $timeout(function () {
+					$timeout.cancel(timer);
+					$location.path('/login');
+				}, 2000);
+			}
+	}
+	]);

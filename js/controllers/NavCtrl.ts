@@ -1,9 +1,9 @@
-﻿App.controller("NavCtrl", ["$scope", "$rootScope", "$location",
-    function (
-        $scope: any,
-        $rootScope: any,
-        $location: ng.ILocationService) {
+﻿App.controller("NavCtrl", ['$scope', '$location', 'authService',
+	($scope: any, $location: ng.ILocationService, authService) => {
+		$scope.logOut = () => {
+			authService.logOut();
+			$location.path('/login');
+		};
 
-        //TODO: find the way to know if the user is logged in or not
-    }
-]); 
+		$scope.authentication = authService.authentication;
+	}]);
