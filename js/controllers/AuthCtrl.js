@@ -1,11 +1,11 @@
 ﻿"use strict";
 App.controller("LoginCtrl", [
-    "$scope", "$rootScope", "$http", "$location", "$route", "$window", "notificationService",
-    function ($scope, $rootScope, $http, $location, $route, $window, notification) {
+    "$scope", "$rootScope", "$http", "$location", "$route", "$window", "notificationService", "dataService",
+    function ($scope, $rootScope, $http, $location, $route, $window, notification, dataService) {
         $scope.user = {};
 
         $scope.login = function () {
-            $http.post('http://localhost:56841/Token', {
+            $http.post(dataService.serverUrl + '/Token', {
                 username: $scope.user.email,
                 password: $scope.user.password,
                 grant_type: "password"
@@ -23,8 +23,8 @@ App.controller("LoginCtrl", [
                 // authentication OK
                 $rootScope.user = data;
                 $rootScope.$emit('userChanged');
-                $location.url('/');
-                $window.sessionStorage.setItem("user", JSON.stringify(data));
+                $location.url('/home');
+                $window.sessionStorage.setItem("todoAppAuthUserData", JSON.stringify(data));
                 console.log(data);
             }).error(function (errors) {
                 return notification.addError(errors.error_description);
@@ -32,13 +32,13 @@ App.controller("LoginCtrl", [
         };
     }
 ]).controller("RegisterCtrl", [
-    "$scope", "$http", "notificationService",
-    function ($scope, $http, notification) {
+    "$scope", "$http", "notificationService", "dataService",
+    function ($scope, $http, notification, dataService) {
         $scope.user = {};
 
         $scope.register = function () {
             $http({
-                url: 'http://localhost:56841/api/Account/register',
+                url: dataService.serverUrl + '/api/Account/register',
                 method: "POST",
                 data: {
                     UserName: $scope.user.username,

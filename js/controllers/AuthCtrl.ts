@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-App.controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$route", "$window", "notificationService",
+App.controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$route", "$window", "notificationService", "dataService",
 	(
 		$scope: any,
 		$rootScope: any,
@@ -8,11 +8,13 @@ App.controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$rou
 		$location: ng.ILocationService,
 		$route: ng.route.IRouteService,
 		$window: ng.IWindowService,
-		notification: INotificationService) => {
+        notification: INotificationService,
+        dataService: IDataService) => {
+
 		$scope.user = {};
 
 		$scope.login = () => {
-			$http.post('http://localhost:56841/Token', {
+			$http.post(dataService.serverUrl + '/Token', {
 				username: $scope.user.email,
 				password: $scope.user.password,
 				grant_type: "password"
@@ -31,24 +33,25 @@ App.controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$rou
 					// authentication OK
 					$rootScope.user = data;
 					$rootScope.$emit('userChanged');
-					$location.url('/');
-					$window.sessionStorage.setItem("user", JSON.stringify(data));
+					$location.url('/home');
+                    $window.sessionStorage.setItem("todoAppAuthUserData", JSON.stringify(data));
 					console.log(data);
 				})
 				.error(errors => notification.addError(errors.error_description));
 		};
 	}
 ])
-	.controller("RegisterCtrl", ["$scope", "$http", "notificationService",
+    .controller("RegisterCtrl", ["$scope", "$http", "notificationService", "dataService",
 		(
 			$scope: any,
 			$http: ng.IHttpService,
-			notification: INotificationService) => {
+            notification: INotificationService,
+            dataService: IDataService) => {
 			$scope.user = {};
 
 			$scope.register = () => {
 				$http({
-					url: 'http://localhost:56841/api/Account/register',
+					url: dataService.serverUrl + '/api/Account/register',
 					method: "POST",
 					data: {
 						UserName: $scope.user.username,
