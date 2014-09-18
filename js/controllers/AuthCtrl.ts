@@ -35,7 +35,7 @@ App.controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$rou
 					$window.sessionStorage.setItem("user", JSON.stringify(data));
 					console.log(data);
 				})
-				.error(errors => notification.addError(errors));
+				.error(errors => notification.addError(errors.error_description));
 		};
 	}
 ])
@@ -59,7 +59,18 @@ App.controller("LoginCtrl", ["$scope", "$rootScope", "$http", "$location", "$rou
 					withCredentials: false
 				})
 					.success(user => console.log(user))
-					.error(errors => notification.addError(errors));
+					.error(errors => {
+						var errorKeys = Object.keys(errors.ModelState);
+						var messages = "";
+
+						for (var key in errorKeys) {
+							if (errorKeys.hasOwnProperty(key)) {
+								messages += errors.ModelState[errorKeys[key]] + "\n";
+							}
+						}
+
+						notification.addError(messages);
+					});
 			};
 		}
 	]);

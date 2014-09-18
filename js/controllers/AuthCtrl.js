@@ -27,7 +27,7 @@ App.controller("LoginCtrl", [
                 $window.sessionStorage.setItem("user", JSON.stringify(data));
                 console.log(data);
             }).error(function (errors) {
-                return notification.addError(errors);
+                return notification.addError(errors.error_description);
             });
         };
     }
@@ -50,7 +50,16 @@ App.controller("LoginCtrl", [
             }).success(function (user) {
                 return console.log(user);
             }).error(function (errors) {
-                return notification.addError(errors);
+                var errorKeys = Object.keys(errors.ModelState);
+                var messages = "";
+
+                for (var key in errorKeys) {
+                    if (errorKeys.hasOwnProperty(key)) {
+                        messages += errors.ModelState[errorKeys[key]] + "\n";
+                    }
+                }
+
+                notification.addError(messages);
             });
         };
     }
