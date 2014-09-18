@@ -63,6 +63,25 @@
     <Content Include="content\bootstrap-theme.min.css" />
     <Content Include="content\bootstrap.css" />
     <Content Include="content\bootstrap.min.css" />
+    <Content Include="content\common.css">
+      <DependentUpon>common.less</DependentUpon>
+    </Content>
+    <Content Include="content\images\animated-overlay.gif" />
+    <Content Include="content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="content\images\ui-icons_222222_256x240.png" />
+    <Content Include="content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="content\images\ui-icons_454545_256x240.png" />
+    <Content Include="content\images\ui-icons_888888_256x240.png" />
+    <Content Include="content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="content\jquery-ui.css" />
+    <Content Include="content\jquery-ui.min.css" />
     <Content Include="content\loading-bar.css" />
     <Content Include="content\loading-bar.min.css" />
     <Content Include="content\themes\base\accordion.css" />
@@ -100,26 +119,6 @@
     <Content Include="content\themes\base\tooltip.css" />
     <Content Include="content\toastr.css" />
     <Content Include="content\toastr.min.css" />
-    <Content Include="css\bootstrap-theme.min.css" />
-    <Content Include="css\bootstrap.min.css" />
-    <Content Include="css\common.css">
-      <DependentUpon>common.less</DependentUpon>
-    </Content>
-    <Content Include="css\images\animated-overlay.gif" />
-    <Content Include="css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="css\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="css\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="css\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="css\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="css\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="css\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="css\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="css\images\ui-icons_222222_256x240.png" />
-    <Content Include="css\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="css\images\ui-icons_454545_256x240.png" />
-    <Content Include="css\images\ui-icons_888888_256x240.png" />
-    <Content Include="css\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="css\jquery-ui.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="home.html" />
     <Content Include="index.html" />
@@ -156,8 +155,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="css\common.less" />
-    <Content Include="css\common.css.map">
+    <Content Include="content\common.less" />
+    <Content Include="content\common.css.map">
       <DependentUpon>common.css</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
