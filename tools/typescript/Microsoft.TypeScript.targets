@@ -14,7 +14,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <VsToolsPath Condition="'$(VsToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VsToolsPath>
+    <VsToolsPath Condition="'$(VsToolsPath)' == ''">Tools</VsToolsPath>
   </PropertyGroup>
 
   <UsingTask TaskName="TypeScript.Tasks.VsTsc" AssemblyFile="$(VSToolsPath)\TypeScript\TypeScript.tasks.dll" />
