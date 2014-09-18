@@ -80,8 +80,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   </PropertyGroup>
 
   <PropertyGroup>
-    <TypeScriptToolsVersion Condition="'$(TypeScriptToolsVersion)'==''">1.0</TypeScriptToolsVersion>
-    <TscToolPath Condition="'$(TscToolPath)' == ''">$(MSBuildProgramFiles32)\Microsoft SDKs\TypeScript</TscToolPath>
+    <TypeScriptToolsVersion Condition="'$(TypeScriptToolsVersion)'==''">Typescript</TypeScriptToolsVersion>
+    <TscToolPath Condition="'$(TscToolPath)' == ''">Tools</TscToolPath>
     <TscToolPath Condition="'$(TypeScriptToolsVersion)' != ''">$(TscToolPath)\$(TypeScriptToolsVersion)</TscToolPath>
     <TscToolExe Condition="'$(TscToolExe)' == ''">tsc.exe</TscToolExe>
     <TscYieldDuringToolExecution Condition="'$(TscYieldDuringToolExecution)' == ''">true</TscYieldDuringToolExecution>
