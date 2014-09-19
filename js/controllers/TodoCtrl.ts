@@ -1,10 +1,26 @@
 ﻿/// <reference path="../../scripts/typings/angularlocalstorage/angularlocalstorage.d.ts" />
 "use strict";
 
-App.controller("TodoCtrl",
-	(
-		$scope: any,
-		localStorageService: ng.localStorage.ILocalStorageService) => {
+App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
+	function (
+        $scope: any,
+        dataService: IDataService,
+        localStorageService: ng.localStorage.ILocalStorageService) {
+
+        $scope.categories = [];
+        $scope.tasks = [];
+
+        dataService.getAllCategories().then(function (data) {
+            $scope.categories = data;
+            console.log($scope.categories);
+        });
+
+        //test getting tasks form category 1
+        dataService.getTasksByCategory(1).then(function (data) {
+            $scope.tasks = data;
+            console.log($scope.tasks);
+        });
+
 		$scope.init = () => {
 			if (localStorageService.get("todoList") === null) {
 				$scope.model = [
@@ -66,5 +82,6 @@ App.controller("TodoCtrl",
 			if (newVal !== null && angular.isDefined(newVal) && newVal !== oldVal) {
 				localStorageService.set("todoList", angular.toJson(newVal));
 			}
-		}, true);
-	});
+        }, true);
+    }
+]);

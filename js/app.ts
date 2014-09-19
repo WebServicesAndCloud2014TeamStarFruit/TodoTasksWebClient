@@ -27,7 +27,7 @@ App.config(['$stateProvider',
 ])
 	.config(["$httpProvider",
         function ($httpProvider: ng.IHttpProvider) {
-			$httpProvider.defaults.withCredentials = false;
+			$httpProvider.defaults.withCredentials = true;
 			//$httpProvider.defaults.useXDomain = true;
             delete $httpProvider.defaults.headers.common['X-Requested-With'];
             $httpProvider.interceptors.push('authInterceptorService');

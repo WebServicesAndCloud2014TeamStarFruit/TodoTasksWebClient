@@ -27,6 +27,7 @@
 	<script src="js/services/NotificationService.js"></script>
 	<script src="js/controllers/TodoCtrl.js"></script>
     <script src="js/controllers/AuthCtrl.js"></script>
+    <script src="js/controllers/NavCtrl.js"></script>
 	<script src="js/directives/angular.editInPlace.js"></script>
 	<script src="js/directives/angular.ngEnter.js"></script>
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -36,7 +37,7 @@
 	<![endif]-->
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavCtrl">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

@@ -1,4 +1,4 @@
-﻿/// <reference path="../scripts/typings/angular-ui/angular-ui-router.d.ts" />
+/// <reference path="../scripts/typings/angular-ui/angular-ui-router.d.ts" />
 "use strict";
 var App = angular.module("todo", ["ui.sortable", "ui.router", "ngRoute", "LocalStorageModule"]);
 
@@ -23,7 +23,7 @@ App.config([
 ]).config([
     "$httpProvider",
     function ($httpProvider) {
-        $httpProvider.defaults.withCredentials = false;
+        $httpProvider.defaults.withCredentials = true;
 
         //$httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];

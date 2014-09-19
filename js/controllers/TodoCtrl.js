@@ -1,68 +1,85 @@
 ﻿/// <reference path="../../scripts/typings/angularlocalstorage/angularlocalstorage.d.ts" />
 "use strict";
-App.controller("TodoCtrl", function ($scope, localStorageService) {
-    $scope.init = function () {
-        if (localStorageService.get("todoList") === null) {
-            $scope.model = [
-                {
-                    name: "Primary", list: [
-                        { taskName: "Create an Angular-js TodoList", isDone: false },
-                        { taskName: "Understanding Angular-js Directives", isDone: true }
-                    ]
-                },
-                {
-                    name: "Secondary", list: [
-                        { taskName: "Build an open-source website builder", isDone: false },
-                        { taskName: "BUild an Email Builder", isDone: false }
-                    ]
-                }
-            ];
-        } else {
-            $scope.model = localStorageService.get("todoList");
-        }
-        $scope.show = "All";
-        $scope.currentShow = 0;
-    };
+App.controller("TodoCtrl", [
+    "$scope", "dataService", "localStorageService",
+    function ($scope, dataService, localStorageService) {
+        $scope.categories = [];
+        $scope.tasks = [];
 
-    $scope.addTodo = function () {
-        /*Should prepend to array*/
-        $scope.model[$scope.currentShow].list.splice(0, 0, { taskName: $scope.newTodo, isDone: false });
+        dataService.getAllCategories().then(function (data) {
+            $scope.categories = data;
+            console.log($scope.categories);
+        });
 
-        /*Reset the Field*/
-        $scope.newTodo = "";
-    };
+        //test getting tasks form category 1
+        dataService.getTasksByCategory(1).then(function (data) {
+            $scope.tasks = data;
+            console.log($scope.tasks);
+        });
 
-    $scope.deleteTodo = function (index) {
-        $scope.model[$scope.currentShow].list.splice(index, 1);
-    };
+        $scope.init = function () {
+            if (localStorageService.get("todoList") === null) {
+                $scope.model = [
+                    {
+                        name: "Primary", list: [
+                            { taskName: "Create an Angular-js TodoList", isDone: false },
+                            { taskName: "Understanding Angular-js Directives", isDone: true }
+                        ]
+                    },
+                    {
+                        name: "Secondary", list: [
+                            { taskName: "Build an open-source website builder", isDone: false },
+                            { taskName: "BUild an Email Builder", isDone: false }
+                        ]
+                    }
+                ];
+            } else {
+                $scope.model = localStorageService.get("todoList");
+            }
+            $scope.show = "All";
+            $scope.currentShow = 0;
+        };
 
-    $scope.todoSortable = {
-        containment: "parent",
-        cursor: "move",
-        tolerance: "pointer"
-    };
+        $scope.addTodo = function () {
+            /*Should prepend to array*/
+            $scope.model[$scope.currentShow].list.splice(0, 0, { taskName: $scope.newTodo, isDone: false });
 
-    $scope.changeTodo = function (i) {
-        $scope.currentShow = i;
-    };
+            /*Reset the Field*/
+            $scope.newTodo = "";
+        };
 
-    /* Filter Function for All | Incomplete | Complete */
-    $scope.showFn = function (todo) {
-        if ($scope.show === "All") {
-            return true;
-        } else if (todo.isDone && $scope.show === "Complete") {
-            return true;
-        } else if (!todo.isDone && $scope.show === "Incomplete") {
-            return true;
-        } else {
-            return false;
-        }
-    };
+        $scope.deleteTodo = function (index) {
+            $scope.model[$scope.currentShow].list.splice(index, 1);
+        };
 
-    $scope.$watch("model", function (newVal, oldVal) {
-        if (newVal !== null && angular.isDefined(newVal) && newVal !== oldVal) {
-            localStorageService.set("todoList", angular.toJson(newVal));
-        }
-    }, true);
-});
+        $scope.todoSortable = {
+            containment: "parent",
+            cursor: "move",
+            tolerance: "pointer"
+        };
+
+        $scope.changeTodo = function (i) {
+            $scope.currentShow = i;
+        };
+
+        /* Filter Function for All | Incomplete | Complete */
+        $scope.showFn = function (todo) {
+            if ($scope.show === "All") {
+                return true;
+            } else if (todo.isDone && $scope.show === "Complete") {
+                return true;
+            } else if (!todo.isDone && $scope.show === "Incomplete") {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.$watch("model", function (newVal, oldVal) {
+            if (newVal !== null && angular.isDefined(newVal) && newVal !== oldVal) {
+                localStorageService.set("todoList", angular.toJson(newVal));
+            }
+        }, true);
+    }
+]);
 //# sourceMappingURL=TodoCtrl.js.map

@@ -22,13 +22,17 @@ App.factory('authInterceptorService', ['$q', '$location', '$window',
             var authData = $window.sessionStorage.getItem('todoAppAuthUserData');
 
             if (authData) {
-                config.headers.Authorization = 'Bearer ' + authData.token;
+                console.log();
+
+                config.headers.Authorization = 'Bearer ' + angular.fromJson(authData).access_token;
             }
 
             return config;
         };
 
         var _responseError = function (rejection) {
+            console.log('rejected');
+
             if (rejection.status === 401) {
                 $location.path('/login');
             }
