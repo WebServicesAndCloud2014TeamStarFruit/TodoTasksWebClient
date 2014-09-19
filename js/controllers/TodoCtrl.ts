@@ -63,7 +63,7 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
                         deadLine: task.Deadline
                     }
 
-                    $scope.model[$scope.currentShow].list.push(newTask);
+                    $scope.model[$scope.currentShow].list.unshift(newTask);
 
                     $scope.newTodo = "";
                 });

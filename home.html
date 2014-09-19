@@ -50,7 +50,7 @@
                                             <input class="todoCheckbox" ng-model="todo.isDone" type="checkbox">
                                             <label class="todoCheckboxlabel"></label>
                                             <edit-in-place value="todo.taskName"></edit-in-place>
-                                            <span>{{todo.deadLine}}</span>
+                                            <span ng-if="todo.deadLine != null"> | DeadLine: {{todo.deadLine}}</span>
                                             <button type="button" class="close pull-right" aria-hidden="true" ng-click="deleteTodo($index)">&times;</button>
                                         </li>
                                     </ul>
