@@ -58,6 +58,7 @@
 					<li><a data-ui-sref="auth.home">Home</a></li>
 				</ul>
 				<ul data-ng-hide="!authentication.isAuth" class="nav navbar-nav navbar-right">
+                    <li><a class="ui-button"><b>Hello {{authentication.userName}}</b></a></li>
 					<li><a data-ng-click="logOut()" class="ui-button">Logout</a></li>
 				</ul>
 				<ul data-ng-hide="authentication.isAuth" class="nav navbar-nav navbar-right">
