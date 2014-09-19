@@ -11,6 +11,8 @@ App.controller("TodoCtrl", [
             console.log($scope.categories);
         });
 
+        dataService.createTask("task task 2", "1-1-2014", 1);
+
         //test getting tasks form category 1
         dataService.getTasksByCategory(1).then(function (data) {
             $scope.tasks = data;

@@ -3,7 +3,7 @@
     getAllCategories: () => any;
     createCategory: (categoryName: string) => any;
     getTasksByCategory: (categoryId: number) => any;
-    createTask: (taskContent: string, categoryId: number) => any;
+    createTask: (taskContent: string, deadLine: any, categoryId: number) => any;
 }
 
 App.service("dataService", ["$http",
@@ -17,7 +17,6 @@ App.service("dataService", ["$http",
             getAllCategories: function () {
                 var promise = $http.get(url + "/api/Categories/All")
                     .then(function (data) {
-                        console.log('fdsfdsasss');
                         return data;
                     });
 
@@ -42,8 +41,14 @@ App.service("dataService", ["$http",
                 return promise;
             },
 
-            createTask: function (taskContent, categoryId) {
-                var promise = $http.post(url + "/api/Tasks/Create", { Content: taskContent, CategoryId: categoryId })
+            createTask: function (taskContent, deadline, categoryId) {
+                var promise = $http.post(url + "/api/Tasks/Create",
+                    {
+                        Content: taskContent,
+                        Deadline: deadline,
+                        Status: 1,
+                        CategoryId: categoryId
+                    })
                     .then(function (data) {
                         return data;
                     });
