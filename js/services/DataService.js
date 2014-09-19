@@ -1,7 +1,7 @@
 ﻿App.service("dataService", [
     "$http",
     function ($http) {
-        var url = "http://46.233.15.116:81";
+        var url = "http://46.233.15.116:80";
 
         var dataService = {
             serverUrl: url,
@@ -20,7 +20,7 @@
                 return promise;
             },
             deleteCategory: function (categoryId) {
-                var promise = $http.delete(url + "/api/Categories/Delete/" + categoryId).then(function () {
+                var promise = $http.post(url + "/api/Categories/Delete/" + categoryId, {}).then(function () {
                     console.log('deleted category: ' + categoryId);
                 });
 
@@ -53,7 +53,7 @@
                 return promise;
             },
             deleteTask: function (taskId) {
-                var promise = $http.delete(url + "/api/Tasks/Delete/" + taskId).then(function () {
+                var promise = $http.post(url + "/api/Tasks/Delete/" + taskId, {}).then(function () {
                     console.log('deleted task: ' + taskId);
                 }, function (err) {
                     console.log(err);
@@ -62,7 +62,7 @@
                 return promise;
             },
             changeTask: function (task) {
-                var promise = $http.put(url + "/api/Tasks/Update/" + task.Id, {
+                var promise = $http.post(url + "/api/Tasks/Update/" + task.Id, {
                     Id: task.Id,
                     Content: task.Content,
                     Status: task.Status,

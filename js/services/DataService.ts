@@ -13,7 +13,7 @@
 App.service("dataService", ["$http",
     function ($http: ng.IHttpService) {
 
-		var url = "http://46.233.15.116:81";
+		var url = "http://46.233.15.116:80";
 
         var dataService: IDataService = {
             serverUrl: url,
@@ -38,7 +38,7 @@ App.service("dataService", ["$http",
 
             deleteCategory: function (categoryId) {
                 var promise = $http
-                    .delete(url + "/api/Categories/Delete/" + categoryId)
+                    .post(url + "/api/Categories/Delete/" + categoryId, {})
                     .then(function () {
                         console.log('deleted category: ' + categoryId);
                     });
@@ -80,7 +80,7 @@ App.service("dataService", ["$http",
             },
 
             deleteTask: function (taskId) {
-                var promise = $http.delete(url + "/api/Tasks/Delete/" + taskId)
+                var promise = $http.post(url + "/api/Tasks/Delete/" + taskId, {})
                     .then(function () {
                         console.log('deleted task: ' + taskId);
                     }, function (err) {
@@ -91,7 +91,7 @@ App.service("dataService", ["$http",
             },
 
             changeTask: function (task) {
-                var promise = $http.put(url + "/api/Tasks/Update/" + task.Id, {
+                var promise = $http.post(url + "/api/Tasks/Update/" + task.Id, {
                         Id: task.Id,
                         Content: task.Content,
                         Status: task.Status,
