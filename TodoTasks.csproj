@@ -66,6 +66,9 @@
     <Content Include="content\common.css">
       <DependentUpon>common.less</DependentUpon>
     </Content>
+    <Content Include="content\common.min.css">
+      <DependentUpon>common.css</DependentUpon>
+    </Content>
     <Content Include="content\images\animated-overlay.gif" />
     <Content Include="content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="content\images\ui-bg_flat_75_ffffff_40x100.png" />
