@@ -2,7 +2,7 @@
 "use strict";
 
 App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
-	function (
+    function (
         $scope: any,
         dataService: IDataService,
         localStorageService: ng.localStorage.ILocalStorageService) {
@@ -34,6 +34,7 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
                                 for (var j = 0; j < buildedCategories.length; j += 1) {
                                     if (tasks[i].CategoryId === buildedCategories[j].id) {
                                         var newTask = {
+                                            id: tasks[i].Id,
                                             taskName: tasks[i].Content,
                                             isDone: tasks[i].Status === 1 ? false : true,
                                             deadLine: tasks[i].Deadline
@@ -47,48 +48,73 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
                         });
                 });
 
-			$scope.show = "All";
-			$scope.currentShow = 0;
+            $scope.show = "All";
+            $scope.currentShow = 0;
         };
 
-		$scope.addTodo = () => {
-			/*Should prepend to array*/
-			$scope.model[$scope.currentShow].list.splice(0, 0, { taskName: $scope.newTodo, isDone: false });
-			/*Reset the Field*/
-			$scope.newTodo = "";
-		};
+        $scope.addTodo = () => {
+            dataService
+                .createTask($scope.newTodo, $scope.newTodoDate, $scope.model[$scope.currentShow].id)
+                .then(function (task) {
+                    var newTask = {
+                        id: task.Id,
+                        taskName: task.Content,
+                        isDone: task.Status === 1 ? false : true,
+                        deadLine: task.Deadline
+                    }
 
-		$scope.deleteTodo = (index) => {
-			$scope.model[$scope.currentShow].list.splice(index, 1);
-		};
+                    $scope.model[$scope.currentShow].list.push(newTask);
 
-		$scope.todoSortable = {
-			containment: "parent",//Dont let the user drag outside the parent
-			cursor: "move",//Change the cursor icon on drag
-			tolerance: "pointer"//Read http://api.jqueryui.com/sortable/#option-tolerance
-		};
+                    $scope.newTodo = "";
+                });
+        };
 
-		$scope.changeTodo = (i) => {
-			$scope.currentShow = i;
-		};
+        $scope.addCategory = () => {
+            dataService
+                .createCategory($scope.newCategory)
+                .then(function (category) {
+                    var newCategory = {
+                        id: category.Id,
+                        name: category.Name,
+                        list: []
+                    }
 
-		/* Filter Function for All | Incomplete | Complete */
-		$scope.showFn = todo => {
-			if ($scope.show === "All") {
-				return true;
-			} else if (todo.isDone && $scope.show === "Complete") {
-				return true;
-			} else if (!todo.isDone && $scope.show === "Incomplete") {
-				return true;
-			} else {
-				return false;
-			}
-		};
+                    $scope.model.push(newCategory);
+                    $scope.newCategory = "";
+                });
+        };
 
-		$scope.$watch("model", (newVal, oldVal) => {
-			if (newVal !== null && angular.isDefined(newVal) && newVal !== oldVal) {
-				localStorageService.set("todoList", angular.toJson(newVal));
-			}
+        $scope.deleteTodo = (index) => {
+            $scope.model[$scope.currentShow].list.splice(index, 1);
+        };
+
+        $scope.todoSortable = {
+            containment: "parent",//Dont let the user drag outside the parent
+            cursor: "move",//Change the cursor icon on drag
+            tolerance: "pointer"//Read http://api.jqueryui.com/sortable/#option-tolerance
+        };
+
+        $scope.changeTodo = (i) => {
+            $scope.currentShow = i;
+        };
+
+        /* Filter Function for All | Incomplete | Complete */
+        $scope.showFn = todo => {
+            if ($scope.show === "All") {
+                return true;
+            } else if (todo.isDone && $scope.show === "Complete") {
+                return true;
+            } else if (!todo.isDone && $scope.show === "Incomplete") {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.$watch("model", (newVal, oldVal) => {
+            if (newVal !== null && angular.isDefined(newVal) && newVal !== oldVal) {
+                localStorageService.set("todoList", angular.toJson(newVal));
+            }
         }, true);
     }
 ]);

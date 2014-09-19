@@ -26,6 +26,7 @@ App.controller("TodoCtrl", [
                         for (var j = 0; j < buildedCategories.length; j += 1) {
                             if (tasks[i].CategoryId === buildedCategories[j].id) {
                                 var newTask = {
+                                    id: tasks[i].Id,
                                     taskName: tasks[i].Content,
                                     isDone: tasks[i].Status === 1 ? false : true,
                                     deadLine: tasks[i].Deadline
@@ -44,11 +45,31 @@ App.controller("TodoCtrl", [
         };
 
         $scope.addTodo = function () {
-            /*Should prepend to array*/
-            $scope.model[$scope.currentShow].list.splice(0, 0, { taskName: $scope.newTodo, isDone: false });
+            dataService.createTask($scope.newTodo, $scope.newTodoDate, $scope.model[$scope.currentShow].id).then(function (task) {
+                var newTask = {
+                    id: task.Id,
+                    taskName: task.Content,
+                    isDone: task.Status === 1 ? false : true,
+                    deadLine: task.Deadline
+                };
 
-            /*Reset the Field*/
-            $scope.newTodo = "";
+                $scope.model[$scope.currentShow].list.push(newTask);
+
+                $scope.newTodo = "";
+            });
+        };
+
+        $scope.addCategory = function () {
+            dataService.createCategory($scope.newCategory).then(function (category) {
+                var newCategory = {
+                    id: category.Id,
+                    name: category.Name,
+                    list: []
+                };
+
+                $scope.model.push(newCategory);
+                $scope.newCategory = "";
+            });
         };
 
         $scope.deleteTodo = function (index) {

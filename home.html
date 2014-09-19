@@ -6,6 +6,8 @@
                     <span class="badge">{{todos.list.length}}</span>
                     {{todos.name}}
                 </a>
+                <input class="categoryField" id="newCategoryField" type="text" ng-model="newCategory" placeholder="Add New Category" ng-enter>
+                <button id="categorySubmit" class="btn btn-default" ng-click="addCategory()">Add</button>
             </div>
         </div>
         <div class="col-xs-9">
@@ -45,6 +47,7 @@
                                             <input class="todoCheckbox" ng-model="todo.isDone" type="checkbox">
                                             <label class="todoCheckboxlabel"></label>
                                             <edit-in-place value="todo.taskName"></edit-in-place>
+                                            <span>{{todo.deadLine}}</span>
                                             <button type="button" class="close pull-right" aria-hidden="true" ng-click="deleteTodo($index)">&times;</button>
                                         </li>
                                     </ul>
@@ -54,6 +57,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <input class="todoField" id="newTodoField" type="text" ng-model="newTodo" placeholder="Add New Todo" ng-enter>
+                                        <input type="date" id="newTodoDateField" ng-model="newTodoDate">
                                         <button id="todoSubmit" class="btn btn-default" ng-click="addTodo()">Add</button>
                                     </div>
                                 </div>
