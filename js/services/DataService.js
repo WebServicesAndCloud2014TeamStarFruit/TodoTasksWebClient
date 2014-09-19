@@ -1,7 +1,7 @@
 ﻿App.service("dataService", [
     "$http",
     function ($http) {
-        var url = "http://localhost:56841";
+        var url = "http://46.233.15.116:81";
 
         var dataService = {
             serverUrl: url,

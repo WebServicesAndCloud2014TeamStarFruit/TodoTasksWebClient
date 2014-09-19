@@ -13,7 +13,7 @@
 App.service("dataService", ["$http",
     function ($http: ng.IHttpService) {
 
-        var url = "http://localhost:56841";
+		var url = "http://46.233.15.116:81";
 
         var dataService: IDataService = {
             serverUrl: url,
