@@ -3,6 +3,7 @@
     getAllCategories: () => any;
     createCategory: (categoryName: string) => any;
     getTasksByCategory: (categoryId: number) => any;
+    getAllTasks: () => any;
     createTask: (taskContent: string, deadLine: any, categoryId: number) => any;
 }
 
@@ -16,8 +17,8 @@ App.service("dataService", ["$http",
 
             getAllCategories: function () {
                 var promise = $http.get(url + "/api/Categories/All")
-                    .then(function (data) {
-                        return data;
+                    .then(function (result) {
+                        return result.data;
                     });
 
                 return promise;
@@ -25,8 +26,8 @@ App.service("dataService", ["$http",
 
             createCategory: function (categoryName) {
                 var promise = $http.post(url + "/api/Categories/Create", { Name: categoryName })
-                    .then(function (data) {
-                        return data;
+                    .then(function (result) {
+                        return result.data;
                     });
 
                 return promise;
@@ -34,8 +35,17 @@ App.service("dataService", ["$http",
 
             getTasksByCategory: function (categoryId) {
                 var promise = $http.get(url + "/api/Tasks/FilterByCategory?categoryId=" + categoryId)
-                    .then(function (data) {
-                        return data;
+                    .then(function (result) {
+                        return result.data;
+                    });
+
+                return promise;
+            },
+
+            getAllTasks: function () {
+                var promise = $http.get(url + "/api/Tasks/All")
+                    .then(function (result) {
+                        return result.data;
                     });
 
                 return promise;
@@ -49,8 +59,8 @@ App.service("dataService", ["$http",
                         Status: 1,
                         CategoryId: categoryId
                     })
-                    .then(function (data) {
-                        return data;
+                    .then(function (result) {
+                        return result.data;
                     });
 
                 return promise;

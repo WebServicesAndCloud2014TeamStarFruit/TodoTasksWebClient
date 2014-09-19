@@ -3,41 +3,42 @@
 App.controller("TodoCtrl", [
     "$scope", "dataService", "localStorageService",
     function ($scope, dataService, localStorageService) {
-        $scope.categories = [];
-        $scope.tasks = [];
-
-        dataService.getAllCategories().then(function (data) {
-            $scope.categories = data;
-            console.log($scope.categories);
-        });
-
-        dataService.createTask("task task 2", "1-1-2014", 1);
-
-        //test getting tasks form category 1
-        dataService.getTasksByCategory(1).then(function (data) {
-            $scope.tasks = data;
-            console.log($scope.tasks);
-        });
+        $scope.model = [];
 
         $scope.init = function () {
-            if (localStorageService.get("todoList") === null) {
-                $scope.model = [
-                    {
-                        name: "Primary", list: [
-                            { taskName: "Create an Angular-js TodoList", isDone: false },
-                            { taskName: "Understanding Angular-js Directives", isDone: true }
-                        ]
-                    },
-                    {
-                        name: "Secondary", list: [
-                            { taskName: "Build an open-source website builder", isDone: false },
-                            { taskName: "BUild an Email Builder", isDone: false }
-                        ]
+            var buildedCategories = [];
+
+            dataService.getAllCategories().then(function (categories) {
+                categories = categories || [];
+
+                for (var i = 0; i < categories.length; i += 1) {
+                    buildedCategories[i] = {
+                        id: categories[i].Id,
+                        name: categories[i].Name,
+                        list: []
+                    };
+                }
+            }).then(function () {
+                dataService.getAllTasks().then(function (tasks) {
+                    tasks = tasks || [];
+
+                    for (var i = 0; i < tasks.length; i += 1) {
+                        for (var j = 0; j < buildedCategories.length; j += 1) {
+                            if (tasks[i].CategoryId === buildedCategories[j].id) {
+                                var newTask = {
+                                    taskName: tasks[i].Content,
+                                    isDone: tasks[i].Status === 1 ? false : true,
+                                    deadLine: tasks[i].Deadline
+                                };
+
+                                buildedCategories[j].list.push(newTask);
+                            }
+                        }
                     }
-                ];
-            } else {
-                $scope.model = localStorageService.get("todoList");
-            }
+                    $scope.model = buildedCategories;
+                });
+            });
+
             $scope.show = "All";
             $scope.currentShow = 0;
         };
