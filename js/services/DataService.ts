@@ -5,6 +5,7 @@
     getTasksByCategory: (categoryId: number) => any;
     getAllTasks: () => any;
     createTask: (taskContent: string, deadLine: any, categoryId: number) => any;
+    deleteTask: (taskId: string) => any;
 }
 
 App.service("dataService", ["$http",
@@ -64,6 +65,18 @@ App.service("dataService", ["$http",
                     });
 
                 return promise;
+            },
+
+            deleteTask: function (taskId) {
+                var promise = $http
+                    .delete(url + "api/Tasks/Delete/" + taskId)
+                    .then(function (result) {
+                        return result.data;
+                    }, function (err) {
+                        console.log(err);
+                    });
+
+                return promise;        
             }
         };
 

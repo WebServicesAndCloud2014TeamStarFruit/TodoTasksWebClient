@@ -44,6 +44,15 @@
                 });
 
                 return promise;
+            },
+            deleteTask: function (taskId) {
+                var promise = $http.delete(url + "api/Tasks/Delete/" + taskId).then(function (result) {
+                    return result.data;
+                }, function (err) {
+                    console.log(err);
+                });
+
+                return promise;
             }
         };
 

@@ -85,7 +85,12 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
         };
 
         $scope.deleteTodo = (index) => {
-            $scope.model[$scope.currentShow].list.splice(index, 1);
+            dataService
+                .deleteTask($scope.model[$scope.currentShow].list[index].id)
+                .then(function (task) {
+                    console.log(task);
+                    $scope.model[$scope.currentShow].list.splice(index, 1);
+                });
         };
 
         $scope.todoSortable = {
