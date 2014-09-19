@@ -1,11 +1,12 @@
 ﻿/// <reference path="../../scripts/typings/angularlocalstorage/angularlocalstorage.d.ts" />
 "use strict";
 
-App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
+App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService", "notificationService",
     function (
         $scope: any,
         dataService: IDataService,
-        localStorageService: ng.localStorage.ILocalStorageService) {
+        localStorageService: ng.localStorage.ILocalStorageService,
+        notification: INotificationService) {
 
         $scope.model = [];
 
@@ -53,6 +54,11 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
         };
 
         $scope.addTodo = () => {
+            if ($scope.model.length === 0) {
+                notification.addError("You have to add categories first");
+                return;
+            }
+
             dataService
                 .createTask($scope.newTodo, $scope.newTodoDate, $scope.model[$scope.currentShow].id)
                 .then(function (task) {
@@ -66,6 +72,7 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
                     $scope.model[$scope.currentShow].list.unshift(newTask);
 
                     $scope.newTodo = "";
+                    $scope.newTodoDate = "";
                 });
         };
 
