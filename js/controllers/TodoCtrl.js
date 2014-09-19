@@ -84,6 +84,17 @@ App.controller("TodoCtrl", [
             });
         };
 
+        $scope.changeStatus = function (index) {
+            var taskForUpdate = {
+                Id: $scope.model[$scope.currentShow].list[index].id,
+                Content: $scope.model[$scope.currentShow].list[index].taskName,
+                Status: $scope.model[$scope.currentShow].list[index].isDone === true ? 0 : 1,
+                CategoryId: $scope.model[$scope.currentShow].id
+            };
+
+            dataService.changeTask(taskForUpdate);
+        };
+
         $scope.todoSortable = {
             containment: "parent",
             cursor: "move",

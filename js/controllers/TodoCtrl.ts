@@ -100,6 +100,17 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
                 });
         };
 
+        $scope.changeStatus = (index) => {
+            var taskForUpdate = {
+                Id: $scope.model[$scope.currentShow].list[index].id,
+                Content: $scope.model[$scope.currentShow].list[index].taskName,
+                Status: $scope.model[$scope.currentShow].list[index].isDone === true ? 0 : 1,
+                CategoryId: $scope.model[$scope.currentShow].id
+            };
+
+            dataService.changeTask(taskForUpdate);
+        };
+
         $scope.todoSortable = {
             containment: "parent",//Dont let the user drag outside the parent
             cursor: "move",//Change the cursor icon on drag

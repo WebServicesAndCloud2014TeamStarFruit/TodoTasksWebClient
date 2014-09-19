@@ -15,7 +15,7 @@
         </div>
         <div class="col-xs-9">
             <div class="row">
-                <div class="col-sm-5">
+                <!--<div class="col-sm-5">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="input-group">
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-sm-5">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -47,7 +47,7 @@
                                 <div class="col-sm-12">
                                     <ul class="list-unstyled" ui-sortable="todoSortable" ng-model="todos" ng-repeat="todos in model" ng-show="$index === currentShow">
                                         <li class="todoTask" ng-repeat="todo in todos.list | filter:showFn | filter :todoSearch ">
-                                            <input class="todoCheckbox" ng-model="todo.isDone" type="checkbox">
+                                            <input class="todoCheckbox" ng-model="todo.isDone" ng-change="changeStatus($index)" type="checkbox">
                                             <label class="todoCheckboxlabel"></label>
                                             <edit-in-place value="todo.taskName"></edit-in-place>
                                             <span ng-if="todo.deadLine != null"> | DeadLine: {{todo.deadLine}}</span>

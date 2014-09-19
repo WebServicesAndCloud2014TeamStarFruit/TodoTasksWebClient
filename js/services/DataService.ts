@@ -7,6 +7,7 @@
     createTask: (taskContent: string, deadLine: any, categoryId: number) => any;
     deleteTask: (taskId: string) => any;
     deleteCategory: (categoryId: string) => any;
+    changeTask: (task: any) => any;
 }
 
 App.service("dataService", ["$http",
@@ -79,14 +80,30 @@ App.service("dataService", ["$http",
             },
 
             deleteTask: function (taskId) {
-                var promise = $http['delete'](url + "/api/Tasks/Delete/" + taskId)
-                    .then(function (result) {
+                var promise = $http.delete(url + "/api/Tasks/Delete/" + taskId)
+                    .then(function () {
                         console.log('deleted task: ' + taskId);
                     }, function (err) {
                         console.log(err);
                     });
 
-                return promise;        
+                return promise;
+            },
+
+            changeTask: function (task) {
+                var promise = $http.put(url + "/api/Tasks/Update/" + task.Id, {
+                        Id: task.Id,
+                        Content: task.Content,
+                        Status: task.Status,
+                        CategoryId: task.CategoryId
+                    })
+                    .then(function () {
+                        console.log('changed task: ' + task.Id + ' - status : ' + task.Status);
+                    }, function (err) {
+                        console.log(err);
+                    });
+
+                return promise;
             }
         };
 
