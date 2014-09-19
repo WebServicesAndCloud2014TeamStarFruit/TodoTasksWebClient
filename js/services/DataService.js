@@ -19,6 +19,13 @@
 
                 return promise;
             },
+            deleteCategory: function (categoryId) {
+                var promise = $http.delete(url + "/api/Categories/Delete/" + categoryId).then(function () {
+                    console.log('deleted category: ' + categoryId);
+                });
+
+                return promise;
+            },
             getTasksByCategory: function (categoryId) {
                 var promise = $http.get(url + "/api/Tasks/FilterByCategory?categoryId=" + categoryId).then(function (result) {
                     return result.data;
@@ -46,8 +53,8 @@
                 return promise;
             },
             deleteTask: function (taskId) {
-                var promise = $http.delete(url + "api/Tasks/Delete/" + taskId).then(function (result) {
-                    return result.data;
+                var promise = $http['delete'](url + "/api/Tasks/Delete/" + taskId).then(function (result) {
+                    console.log('deleted task: ' + taskId);
                 }, function (err) {
                     console.log(err);
                 });

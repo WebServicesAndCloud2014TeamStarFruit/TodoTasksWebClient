@@ -87,9 +87,16 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService",
         $scope.deleteTodo = (index) => {
             dataService
                 .deleteTask($scope.model[$scope.currentShow].list[index].id)
-                .then(function (task) {
-                    console.log(task);
+                .then(function () {
                     $scope.model[$scope.currentShow].list.splice(index, 1);
+                });
+        };
+
+        $scope.deleteCategory = (index) => {
+            dataService
+                .deleteCategory($scope.model[index].id)
+                .then(function () {
+                    $scope.model.splice(index, 1);
                 });
         };
 

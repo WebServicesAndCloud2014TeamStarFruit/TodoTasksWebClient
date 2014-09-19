@@ -1,11 +1,14 @@
 ﻿<div class="container" id="playground" ng-controller="TodoCtrl" ng-init="init()">
     <div class=" row">
         <div class="col-xs-3">
-            <div class="list-group">
-                <a href="#" ng-repeat="todos in model" class="list-group-item" ng-class="{'active' : currentShow === $index}" ng-click="changeTodo($index)">
+            <div class="list-group" ng-repeat="todos in model">
+                <a href="#" class="list-group-item" ng-class="{'active' : currentShow === $index}" ng-click="changeTodo($index)">
                     <span class="badge">{{todos.list.length}}</span>
                     {{todos.name}}
                 </a>
+                <button class="btn btn-danger" ng-click="deleteCategory($index)">&times;</button>
+            </div>
+            <div>
                 <input class="categoryField" id="newCategoryField" type="text" ng-model="newCategory" placeholder="Add New Category" ng-enter>
                 <button id="categorySubmit" class="btn btn-default" ng-click="addCategory()">Add</button>
             </div>

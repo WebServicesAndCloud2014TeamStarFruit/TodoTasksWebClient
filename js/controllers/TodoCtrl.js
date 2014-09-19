@@ -73,9 +73,14 @@ App.controller("TodoCtrl", [
         };
 
         $scope.deleteTodo = function (index) {
-            dataService.deleteTask($scope.model[$scope.currentShow].list[index].id).then(function (task) {
-                console.log(task);
+            dataService.deleteTask($scope.model[$scope.currentShow].list[index].id).then(function () {
                 $scope.model[$scope.currentShow].list.splice(index, 1);
+            });
+        };
+
+        $scope.deleteCategory = function (index) {
+            dataService.deleteCategory($scope.model[index].id).then(function () {
+                $scope.model.splice(index, 1);
             });
         };
 

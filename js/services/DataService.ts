@@ -6,6 +6,7 @@
     getAllTasks: () => any;
     createTask: (taskContent: string, deadLine: any, categoryId: number) => any;
     deleteTask: (taskId: string) => any;
+    deleteCategory: (categoryId: string) => any;
 }
 
 App.service("dataService", ["$http",
@@ -29,6 +30,16 @@ App.service("dataService", ["$http",
                 var promise = $http.post(url + "/api/Categories/Create", { Name: categoryName })
                     .then(function (result) {
                         return result.data;
+                    });
+
+                return promise;
+            },
+
+            deleteCategory: function (categoryId) {
+                var promise = $http
+                    .delete(url + "/api/Categories/Delete/" + categoryId)
+                    .then(function () {
+                        console.log('deleted category: ' + categoryId);
                     });
 
                 return promise;
@@ -68,10 +79,9 @@ App.service("dataService", ["$http",
             },
 
             deleteTask: function (taskId) {
-                var promise = $http
-                    .delete(url + "api/Tasks/Delete/" + taskId)
+                var promise = $http['delete'](url + "/api/Tasks/Delete/" + taskId)
                     .then(function (result) {
-                        return result.data;
+                        console.log('deleted task: ' + taskId);
                     }, function (err) {
                         console.log(err);
                     });
