@@ -59,6 +59,11 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService", "not
                 return;
             }
 
+            if ($scope.newTodo == null) {
+                notification.addError("You have to insert Todo content first");
+                return;
+            }
+
             dataService
                 .createTask($scope.newTodo, $scope.newTodoDate, $scope.model[$scope.currentShow].id)
                 .then(function (task) {
@@ -77,6 +82,11 @@ App.controller("TodoCtrl", ["$scope", "dataService", "localStorageService", "not
         };
 
         $scope.addCategory = () => {
+            if ($scope.newCategory == null) {
+                notification.addError("You have to insert Category name first");
+                return;
+            }
+
             dataService
                 .createCategory($scope.newCategory)
                 .then(function (category) {

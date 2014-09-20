@@ -50,6 +50,11 @@ App.controller("TodoCtrl", [
                 return;
             }
 
+            if ($scope.newTodo == null) {
+                notification.addError("You have to insert Todo content first");
+                return;
+            }
+
             dataService.createTask($scope.newTodo, $scope.newTodoDate, $scope.model[$scope.currentShow].id).then(function (task) {
                 var newTask = {
                     id: task.Id,
@@ -66,6 +71,11 @@ App.controller("TodoCtrl", [
         };
 
         $scope.addCategory = function () {
+            if ($scope.newCategory == null) {
+                notification.addError("You have to insert Category name first");
+                return;
+            }
+
             dataService.createCategory($scope.newCategory).then(function (category) {
                 var newCategory = {
                     id: category.Id,
